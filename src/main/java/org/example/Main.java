@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class Main {
@@ -33,7 +34,7 @@ public class Main {
             String inputString = "{\"model\": \"gemma3:4b\", \"prompt\": \"" + prompt + "\", \"stream\": false}"; //Here you have to add the systemPrompt, the prompt and the
 
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = inputString.getBytes("utf-8");
+                byte[] input = inputString.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
 
