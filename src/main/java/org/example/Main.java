@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("Hello! Enter your Prompt: ");
         String prompt = scanner.nextLine();
 
@@ -18,11 +19,13 @@ public class Main {
     }
 
     private static String fetchResponse(String prompt) {
-
-        String systemPrompt = ""; //Here you can add your systemPrompt that is sent with every request
+        //TODO: Here you can add your systemPrompt that is sent with every request
+        String systemPrompt = "";
 
         try {
-            String urlString = "http://localhost:11434/api/generate"; //The LLM runs on localhost:11434, the endpoint is under /api/generate
+            //TODO: The LLM runs on http://localhost:11434, the endpoint is under /api/generate
+            // combine them to get the url
+            String urlString = "";
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -31,7 +34,9 @@ public class Main {
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
 
-            String inputString = "{\"model\": \"gemma3:4b\", \"prompt\": \"" + prompt + "\", \"stream\": false}"; //Here you have to add the systemPrompt, the prompt and the
+            //TODO: Here you have to add the model name (we use gemma3:4b), the system prompt
+            // and the actual prompt (the system prompt and the actual prompt are combined in the prompt field)
+            String inputString = "{\"model\": \"\", \"prompt\": \"\", \"stream\": false}";
 
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = inputString.getBytes(StandardCharsets.UTF_8);
