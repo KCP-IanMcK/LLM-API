@@ -13,8 +13,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Hello! Enter your Prompt: ");
+        //Read the user input
         String prompt = scanner.nextLine();
 
+        //Make the http Request and return the answer
         System.out.println(fetchResponse(prompt));
     }
 
@@ -26,6 +28,8 @@ public class Main {
             //TODO: The LLM runs on http://localhost:11434, the endpoint is under /api/generate
             // combine them to get the url
             String urlString = "";
+
+            //Set up the http post request
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -38,6 +42,7 @@ public class Main {
             // and the actual prompt (the system prompt and the actual prompt are combined in the prompt field)
             String inputString = "{\"model\": \"\", \"prompt\": \"\", \"stream\": false}";
 
+            //Make the http request
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = inputString.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
@@ -47,7 +52,7 @@ public class Main {
                 throw new RuntimeException("Model answered with status code: " + connection.getResponseCode());
             }
 
-            // Read Response
+            //Read the response
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
             String inputLine;
@@ -58,6 +63,7 @@ public class Main {
             }
             in.close();
 
+            //Return only the answer, not the whole json
             return extractResponse(String.valueOf(response));
 
         } catch (Exception e) {
